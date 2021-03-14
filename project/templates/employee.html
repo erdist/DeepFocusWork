@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
+<section class="hero is-fullheight">
+<div class="hero-body has-text-centered">
+<div class="container">
+<h1 class="title">
+  Welcome, {{ name }}!
+  
+</h1>
+<h1 class="title">
+  <a href="{{ url_for('main.insertDistraction', distraction="Colleague") }}" class=" btn btn-lg btn-primary shadow-sm d-none d-sm-inline-block">
+      <i class="fas fa-mail-forward fa-sm text-white-50"></i> Colleague
+  </a>
+<a href="{{ url_for('main.insertDistraction', distraction="Personal") }}" class=" btn btn-lg btn-secondary shadow-sm d-none d-sm-inline-block">
+      <i class="fas fa-mail-forward fa-sm text-white-50"></i> Personal
+  </a>
+<a href="{{ url_for('main.insertDistraction', distraction="Noise") }}" class=" btn btn-lg btn-success shadow-sm d-none d-sm-inline-block">
+      <i class="fas fa-mail-forward fa-sm text-white-50"></i> Noise
+  </a>
+    <a href="{{ url_for('main.insertDistraction', distraction="Social") }}" class=" btn btn-lg btn-info shadow-sm d-none d-sm-inline-block">
+      <i class="fas fa-mail-forward fa-sm text-white-50"></i> Social
+  </a>
+    <a href="{{ url_for('main.insertDistraction', distraction="Depression") }}" class=" btn btn-lg btn-danger shadow-sm d-none d-sm-inline-block">
+      <i class="fas fa-mail-forward fa-sm text-white-50"></i> Depression
+  </a>
+</h1>
+          <div class="row">
+
+            <!-- Area Chart -->
+            <div class="col-xl-8 col-lg-7">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Total Distractions</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                      <div class="dropdown-header">Dropdown Header:</div>
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="chart-area">
+                    <canvas id="AreaChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pie Chart -->
+            <div class="col-xl-4 col-lg-5">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Total Distractions</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                      <div class="dropdown-header">Dropdown Header:</div>
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="chart-pie pt-4 pb-2">
+                    <canvas id="myPieChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+</div>
+</div>
+  {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% if messages[0] == "You have successfully reported." %}
+                <div class="notification is-success">
+                    {{ messages[0] }}
+                </div>
+            {% else %}
+                <div class="notification is-danger">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+        {% endif %}
+        {% endwith %}
+</section>
+
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+  <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <script src="/static/vendor/chart.js/Chart.min.js"></script>
+    <script src="/static/js/demo/employeeHourlyLineChart.js?r={{reload}}"></script>
+    <script src="/static/js/demo/employeeHourlyPieChart.js?r={{reload}}"></script>
+
+
+
+
+{% endblock %}

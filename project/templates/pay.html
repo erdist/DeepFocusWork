@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero is-fullheight">
+<div class="hero-body has-text-centered">
+<div class="container">
+<h1 class="title">
+  The price is {{ price }}!
+  <form action="{{url_for('main.paymentProcess',planId=planName)}}" method="POST">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+  <script
+    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key="{{publicKey}}"
+    data-name="DeepFocusWork"
+    data-email="{{ currentemail }}"
+    data-description="Subscription for 1 month"
+    data-amount="{{centPrice}}"
+    data-label="Pay with Credit Card">
+  </script>
+</form>
+</h1>
+</div>
+</div>
+</section>
+{% endblock %}

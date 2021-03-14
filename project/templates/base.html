@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>DeepFocusWork Your real friend in the office</title>
+
+    <link rel="stylesheet" href="/static/css/bulma.min.css" />
+
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="/static/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/landing-page.min.css" rel="stylesheet">
+    <link href="/static/css/pricing.css" rel="stylesheet">
+    <link href="/static/css/freelancer.min.css" rel="stylesheet">
+    <link href="/static/css/slider.css" rel="stylesheet">
+    <link href="/static/css/vertical.css" rel="stylesheet">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+</head>
+
+<body id="page-top">
+	<section class="hero is-light is-fullheight">
+	    <nav class="navbar navbar-expand-lg bg-dark text-uppercase fixed-top " id="mainNav">
+	        <div class="container-fluid">
+	            <a class="navbar-brand js-scroll-trigger" href="{{ url_for('main.index') }}">DeepFocusWork</a>
+	            <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarCollapsibleMenu" aria-controls="navbarCollapsibleMenu" aria-expanded="false" aria-label="Toggle navigation">
+	                Menu
+	                <i class="fas fa-bars"></i>
+	            </button>
+	            <div id="navbarCollapsibleMenu" class="collapse navbar-collapse">
+	                <div class="navbar-nav ml-auto font-weight-bold">
+	                    <li class="nav-item mx-0 mx-lg-1">
+	                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ url_for('main.index') }}">Home</a>
+	                    </li>
+	                    <li class="nav-item mx-0 mx-lg-1">
+	                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ url_for('main.pricing') }}">Pricing</a>
+	                    </li>
+	                    {% if current_user.is_authenticated %}
+	                        <li class="nav-item mx-0 mx-lg-1">
+	                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ url_for('main.profile') }}">Profile</a>
+	                        </li>
+	                    {% endif %}
+	                    {% if current_user.is_authenticated %}
+                            {% if current_user.isAdmin %}
+                                <li class="nav-item mx-0 mx-lg-1">
+                                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ url_for('main.admin') }}">Admin</a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item mx-0 mx-lg-1">
+                                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ url_for('main.employee') }}">Panel</a>
+                                </li>
+                            {% endif %}
+	                    {% endif %}
+	                    {% if not current_user.is_authenticated %}
+	                        <li class="nav-item mx-0 mx-lg-1">
+	                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ url_for('auth.login') }}">Login</a>
+	                        </li>
+	                        <li class="nav-item mx-0 mx-lg-1">
+	                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ url_for('auth.signup') }}">Signup</a>
+	                        </li>
+	                    {% endif %}
+	                    {% if current_user.is_authenticated %}
+	                        <li class="nav-item mx-0 mx-lg-1">
+	                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ url_for('auth.logout') }}">Logout</a>
+	                        </li>
+	                    {% endif %}
+	                </div>
+	            </div>
+	        </div>
+	    </nav>
+	    <body>
+		    
+		       {% block content %}
+		       {% endblock %}
+		   
+	    </body>
+    </section>
+    <div class="scroll-to-top position-fixed ">
+    <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="/static/js/jqBootstrapValidation.js"></script>
+    <script src="/static/js/contact_me.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="/static/js/freelancer.min.js"></script>
+
+</body>
+
+</html>

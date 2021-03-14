@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <head>
+        <link rel="stylesheet" href="/static/css/bulma.min.css" />
+        <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
+        <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    </head>
+
+<section class="hero is-fullheight">
+<div class="hero-body has-text-centered">
+<div class="container">
+<h1 class="title">
+  Welcome, {{ name }}!
+  <br>
+  {% if subscriptionStatus %}
+	Your subscription ends at {{endTime}} in UTC time.
+  {% else %}
+    You don't have an active subscription. <a href="pricing">Buy Now.</a>
+  {% endif %}
+  <br>
+  {% if cancelled_at %}
+  Cancelled at: {{cancelled_at}}
+  {% endif %}
+</h1>
+{% if subscriptionStatus%}
+<a href="#" class="btn btn-block btn-primary text-uppercase" data-toggle="modal" data-target="#unsubscribeModal">Unsubscribe</a>
+{% endif %}
+<hr>
+{% if employees %}
+    <div class="table-container">
+        <table class="table" id="employeeTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>E-mail</th>
+                    <th>Last Report Time</th>
+                    <th>Peek</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in employees %}
+                    <tr>
+                        <th>{{ employee['name'] }}</th>
+                        <th>{{ employee['email'] }}</th>
+                        <th>{{ employee['lastReportTime'] }}</th>
+                        <th><a class="button is-success" onclick="loadCharts('{{ employee['email'] }}','{{ employee['name'] }}')" data-toggle="modal" data-target="#peekModal" data-value={{ employee['email'] }}>Peek</a></th>
+                        <th><a class="button is-danger" href="{{ url_for('main.deleteDevice', employee=employee['email']) }}">Delete</a></th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}
+</div>
+</div>
+  {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% if "You have" in messages[0] %}
+                <div class="notification is-success">
+                    {{ messages[0] }}
+                </div>
+            {% else %}
+                <div class="notification is-danger">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+        {% endif %}
+        {% endwith %}
+</section>
+
+<div class="modal fade" id="unsubscribeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Unsubscribe" below if you are ready to end your current subscription.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="{{ url_for('main.unsubscribe') }}">Unsubscribe</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="modal" id="peekModal">
+  <div class="modal-background"></div>
+  <div class="modal-card" style="width: 1280px" >
+      <header class="modal-card-head">
+          <p class="modal-card-title" id="peekModalTitle">Modal title</p>
+        <button class="delete" onclick="destroyCharts()" aria-label="close" data-dismiss="modal"></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="row">
+
+            <!-- Area Chart -->
+            <div class="col-xl-8 col-lg-7">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Daily Distractions</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                      <div class="dropdown-header">Dropdown Header:</div>
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="chart-area">
+                    <canvas id="AreaChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pie Chart -->
+            <div class="col-xl-4 col-lg-5">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Daily Distractions</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                      <div class="dropdown-header">Dropdown Header:</div>
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="chart-pie pt-4 pb-2">
+                    <canvas id="myPieChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="notification is-info" id="colleagueId" style="display: none"></div>
+        <div class="notification is-info" id="socialId" style="display: none"></div>
+        <div class="notification is-dark" id="personalId" style="display: none"></div>
+        <div class="notification is-warning" id="noiseId1" style="display: none"></div>
+        <div class="notification is-danger" id="noiseId2" style="display: none"></div>
+        <div class="notification is-danger" id="depressionId" style="display: none"></div>
+
+      </section>
+      <button class="modal-close is-large" onclick="destroyCharts()" aria-label="close" data-dismiss="modal"></button>
+    <!-- Any other Bulma elements you want -->
+  </div>
+</div>
+
+        <script src="/static/vendor/jquery/jquery.min.js"></script>
+  <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <script src="/static/vendor/chart.js/Chart.min.js"></script>
+    <script src="/static/js/demo/peekEmployeeModal.js?r={{reload}}"></script>
+{% endblock %}

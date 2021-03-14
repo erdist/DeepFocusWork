@@ -1,0 +1,13 @@
+Flask~=1.1.1
+Werkzeug~=0.16.0
+Flask-SqlAlchemy
+Flask-Login
+Cryptography
+Stripe~=2.41.0
+PyMySql
+Python-dotenv
+Flask-Wtf
+Yagmail~=0.11.224
+Redis
+Celery~=4.4.2
+python-dateutil~=2.8.0

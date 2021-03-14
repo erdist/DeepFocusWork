@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.js": "/static/heatMap/js/main.f5def012.chunk.js",
+    "main.js.map": "/static/heatMap/js/main.f5def012.chunk.js.map",
+    "runtime-main.js": "/static/heatMap/js/runtime-main.45614c53.js",
+    "runtime-main.js.map": "/static/heatMap/js/runtime-main.45614c53.js.map",
+    "static/css/2.c4b83ee6.chunk.css": "/static/heatMap/css/2.c4b83ee6.chunk.css",
+    "static/js/2.35a01d95.chunk.js": "/static/heatMap/js/2.35a01d95.chunk.js",
+    "static/js/2.35a01d95.chunk.js.map": "/static/heatMap/js/2.35a01d95.chunk.js.map",
+    "index.html": "/heatMap/index.html",
+    "precache-manifest.ad22bcf79903be77f7f5139544afdb2e.js": "/static/heatMap/precache-manifest.ad22bcf79903be77f7f5139544afdb2e.js",
+    "service-worker.js": "/static/heatMap/service-worker.js",
+    "static/css/2.c4b83ee6.chunk.css.map": "/static/heatMap/css/2.c4b83ee6.chunk.css.map",
+    "static/media/semantic.min.css": "/static/heatMap/media/outline-icons.ef60a4f6.woff",
+    "static/media/fs.webp": "/static/heatMap/media/fs.d9b552ea.webp"
+  },
+  "entrypoints": [
+    "static/heatMap/js/runtime-main.45614c53.js",
+    "static/heatMap/css/2.c4b83ee6.chunk.css",
+    "static/heatMap/js/2.35a01d95.chunk.js",
+    "static/heatMap/js/main.f5def012.chunk.js"
+  ]
+}
